@@ -100,17 +100,17 @@ const NavDetailview = id => {
                     aria-hidden="true"></i></div>
             <div class="movie-rating" id="movierating">
                 ${(
-                  '<i class="fa fa-star movie-star-rating" id="' +
+                  '<i class="fas fa-star movie-star-rating" id="' +
                   movieDetails._id +
                   '" aria-hidden=" true"></i>'
                 ).repeat(ratingCounter[0])}
                 ${(
-                  '<i class="fa fa-star-half-o movie-star-rating" id="' +
+                  '<i class="fas fa-star-half-alt movie-star-rating" id="' +
                   movieDetails._id +
                   '" aria-hidden=" true"></i>'
                 ).repeat(ratingCounter[1])}
                 ${(
-                  '<i class="fa fa-star-o movie-star-rating" id="' +
+                  '<i class="far fa-star movie-star-rating" id="' +
                   movieDetails._id +
                   '" aria-hidden=" true"></i>'
                 ).repeat(ratingCounter[2])}
@@ -196,7 +196,7 @@ const NavDetailview = id => {
       dateTimeHtmlElement +=
         '<i class="fa fa-calendar movie-session-calendar" id="${movieDetails._id}" aria-hidden="true"></i> ' +
         date +
-        ' : <i class="fa fa-clock-o movie-session-clock" id="${movieDetails._id}" aria-hidden="true"></i> ';
+        ' : <i class="far fa-clock movie-session-clock" id="${movieDetails._id}" aria-hidden="true"></i> ';
       dateTimeHtmlElement += sessionObj[date].join(", ");
 
       dateTimeHtmlElement += "<br>";
