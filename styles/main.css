@@ -2,49 +2,247 @@
   box-sizing: border-box;
 }
 body {
-  margin: 0;
-  padding: 0;
-  background-color: #0b1124;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial,
+    sans-serif;
+  background-color: #3d3de9;
 }
-.new-movies {
-  margin: 0.5em;
-  letter-spacing: 0.2em;
-  color: #efefe3;
-  font-family: segoe;
-}
-.movie {
-  padding: 1em;
-}
-.movie-title {
-  font-family: segoe;
-  font-weight: semi-bold;
-  letter-spacing: 0.1em;
-  color: #efefe3;
-}
-.movie-poster {
-  width: 100%;
 
-  box-shadow: 0 4px 8px 0 rgba(16, 108, 145, 0.2), 0 6px 20px 0 white;
-  z-index: -6;
-  border-radius: 20px;
+.page-title {
+  color: whitesmoke;
 }
-.movie-info {
+
+.movie-list {
+  padding: 0;
+  padding-top: 1em;
   list-style-type: none;
+  width: 100%;
+}
+
+.movie {
+  background-color: #0f0fda;
   display: flex;
+  margin-bottom: 1em;
 }
-.movie-more-info {
-  text-decoration: blink;
-  color: #efefe3;
-  font-size: 1.3em;
+
+.column-left {
+  flex: 3;
+  position: relative;
 }
-.movie-show-time {
-  flex-direction: row;
-  flex-grow: 2;
+
+.column-right {
+  color: whitesmoke;
+  flex: 7;
+  padding: 1.5em;
 }
-.movie-language {
-  font-size: 1.3em;
-  flex-grow: 1;
-  color: #efefe3;
+
+@media (min-width: 1025px) {
+  .movie {
+    height: 15em;
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+  }
+
+  .movie-poster {
+    height: 15em;
+    left: 1em;
+    position: relative;
+    top: -1em;
+  }
+
+  .column-right {
+    margin-left: -10em;
+  }
+
+  .movie-title {
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 0.35em;
+    margin-top: 0;
+  }
+
+  .movie-duration,
+  .movie-rating,
+  .movie-language {
+    font-size: 1.25em;
+    margin-bottom: 0.25em;
+    margin-top: 0;
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1024px) {
+  .movie {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    height: 14em;
+  }
+
+  .movie-poster {
+    height: 15em;
+    left: 1em;
+    position: relative;
+    top: -1em;
+  }
+
+  .column-right {
+    margin-left: -6em;
+  }
+
+  .movie-title {
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 0.35em;
+    margin-top: 0;
+  }
+
+  .movie-duration,
+  .movie-rating,
+  .movie-language {
+    font-size: 1.25em;
+    margin-bottom: 0.25em;
+    margin-top: 0;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 900px) {
+  .movie {
+    display: flex;
+    flex-direction: row;
+    height: 16em;
+  }
+
+  .movie-poster {
+    height: 15em;
+    left: 1em;
+    position: relative;
+    top: -0.5em;
+  }
+
+  .column-right {
+    margin-left: -3em;
+  }
+
+  .movie-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 0.33em;
+    margin-top: 0;
+  }
+
+  .movie-duration,
+  .movie-rating,
+  .movie-language {
+    font-size: 1em;
+    margin-bottom: 0.25em;
+    margin-top: 0;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 767px) {
+  .movie {
+    display: flex;
+    flex-direction: row;
+    height: 8em;
+  }
+
+  .movie-poster {
+    height: 8em;
+    left: 1em;
+    position: relative;
+    top: -0.5em;
+  }
+
+  .column-right {
+    margin-right: 5em;
+  }
+
+  .movie-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 0.33em;
+    margin-top: 0;
+  }
+
+  .movie-duration,
+  .movie-rating,
+  .movie-language {
+    font-size: 1em;
+    margin-bottom: 0.25em;
+    margin-top: 0;
+  }
+}
+
+@media (min-width: 321px) and (max-width: 480px) {
+  .movie {
+    display: flex;
+    flex-direction: row;
+    height: 5em;
+    width: 100%;
+  }
+
+  .movie-poster {
+    height: 5em;
+    left: 1em;
+    position: relative;
+    top: -0.7em;
+  }
+
+  .column-right {
+    margin-right: 4em;
+    margin-top: -1.5em;
+  }
+
+  .movie-title {
+    font-size: 1em;
+    font-weight: bold;
+    margin-bottom: 0.3em;
+    margin-top: 0;
+  }
+
+  .movie-duration,
+  .movie-rating,
+  .movie-language {
+    font-size: 1em;
+    margin-bottom: 0.2em;
+    margin-top: 0;
+  }
+}
+
+@media (min-width: 290px) and (max-width: 320px) {
+  .movie {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    height: 6em;
+  }
+
+  .movie-poster {
+    height: 6em;
+    left: 1em;
+    position: relative;
+    top: -0.5em;
+  }
+
+  .column-right {
+    margin-left: 0.5em;
+    margin-top: -0.5em;
+  }
+
+  .movie-title {
+    font-size: 1em;
+    font-weight: bold;
+    margin-bottom: 0.33em;
+    margin-top: 0;
+  }
+
+  .movie-duration,
+  .movie-rating,
+  .movie-language {
+    font-size: 0.5em;
+    margin-bottom: 0.25em;
+    margin-top: 0;
+  }
 }
 
 /* Detail View CSS */

@@ -1,56 +1,48 @@
 let resultElement = document.querySelector("#movies");
 let APIData = [];
 
-// Calling the movie result api
-
-const xhr = new XMLHttpRequest();
-xhr.responseType = "json";
-xhr.onreadystatechange = () => {
-  if (xhr.readyState === XMLHttpRequest.DONE) {
-    APIData = xhr.response.content;
-    // function call to process api result
-    displayListView(APIData);
-  }
+const changeTitle = titleValue => {
+  document.getElementById("page-title").innerHTML = titleValue;
 };
-// url to call api
-xhr.open(
-  "GET",
-  "https://salty-sea-40504.herokuapp.com/api/v1/movies/getSessions"
-);
-xhr.send();
+
+function RatingStarHtmlElement(ratingValue) {
+  let ratingCounter = [0, 0, 0];
+  let totalRatingCount = ratingValue;
+  ratingCounter[0] = Math.floor(totalRatingCount % 5);
+  ratingCounter[1] = Math.round(totalRatingCount % 1);
+  ratingCounter[2] = 5 - ratingCounter[0] - ratingCounter[1];
+  return `
+  ${'<i class="fas fa-star movie-star-rating"  aria-hidden=" true"></i>'.repeat(
+    ratingCounter[0]
+  )}
+  ${'<i class="fas fa-star-half-alt movie-star-rating" aria-hidden=" true"></i>'.repeat(
+    ratingCounter[1]
+  )}
+  ${'<i class="far fa-star movie-star-rating"  aria-hidden=" true"></i>'.repeat(
+    ratingCounter[2]
+  )}`;
+}
 
 // mapping response to respective HTML elements
 renderHtml = responseData => {
-  return `<div class="movie">
-      <h2 class="movie-title" id=${chkNull(
-        responseData._id,
-        "To be Named"
-      )}>${chkNull(responseData.title, "To be Named")}</h2>
-      <img class="movie-poster" id=${chkNull(
-        responseData._id,
-        "To be Named"
-      )} src="${responseData.poster}" alt=${chkNull(
-    responseData.title,
-    "hero and heroine"
-  )}>
-      <ul class="movie-info" id=${chkNull(responseData._id, "To be Named")}>
-          <li class="movie-show-time" id=${chkNull(
-            responseData._id,
-            "To be Named"
-          )}><a class="movie-more-info" id=${chkNull(
-    responseData._id,
-    "To be Named"
-  )} href="#">${chkNull(
-    // responseData.sessions[0].sessionDateTime[0],
-    "",
-    "Coming Soon"
-  )}</a></li>
-          <li class="movie-language" id=${chkNull(
-            responseData._id,
-            "To be Named"
-          )}>${chkNull(responseData.language, "All Languages")}</li>
-      </ul>
-  </div>`;
+  return `<ul class="movie-list" id="movielist">
+  <li class="movie" id="${responseData._id}">
+      <div class="column-left">
+          <img class="movie-poster" src="${responseData.poster}"
+              alt="${responseData.title || "Movie poster"}">
+      </div>
+      <div class="column-right">
+          <h2 class="movie-title">${responseData.title || "Untitled"}</h2>
+          <p class="movie-rating">Rating:${RatingStarHtmlElement(
+            responseData.rating
+          )}</p>
+          <p class="movie-language">Language: ${responseData.language ||
+            "Unknown"}</p>
+          <p class="movie-duration">Duration: ${responseData.duration ||
+            "Unknown"} minutes</p>
+      </div>
+  </li>
+  </ul>`;
 };
 
 const chkNull = (val, defaultVal) => {
@@ -60,8 +52,9 @@ const chkNull = (val, defaultVal) => {
 };
 
 const displayListView = apiData => {
+  changeTitle("Latest Movies");
   resultElement.innerHTML = apiData.map(data => renderHtml(data)).join("\n");
-  let thumbnails = document.querySelectorAll("#movies > div > img");
+  let thumbnails = document.querySelectorAll("#movielist > li");
   thumbnails.forEach(function(thumbnail) {
     thumbnail.addEventListener("click", function() {
       // Set clicked image as display image.
@@ -74,11 +67,8 @@ const NavDetailview = id => {
   let movieDetails = APIData.find(function(element) {
     return element._id === id;
   });
-  let ratingCounter = [0, 0, 0];
-  let totalRatingCount = movieDetails.rating;
-  ratingCounter[0] = Math.floor(totalRatingCount % 5);
-  ratingCounter[1] = Math.round(totalRatingCount % 1);
-  ratingCounter[2] = 5 - ratingCounter[0] - ratingCounter[1];
+
+  changeTitle(movieDetails.title);
 
   resultElement.innerHTML = `<div class="movie-details-tcontainer" id="moviedetailscontainer">
     <div class="movie-details-trailer" id="moviedetailstrailer">
@@ -99,21 +89,7 @@ const NavDetailview = id => {
                     }<i class="fa fa-hourglass-half movie-duration-time" id="moviedurationtime"
                     aria-hidden="true"></i></div>
             <div class="movie-rating" id="movierating">
-                ${(
-                  '<i class="fas fa-star movie-star-rating" id="' +
-                  movieDetails._id +
-                  '" aria-hidden=" true"></i>'
-                ).repeat(ratingCounter[0])}
-                ${(
-                  '<i class="fas fa-star-half-alt movie-star-rating" id="' +
-                  movieDetails._id +
-                  '" aria-hidden=" true"></i>'
-                ).repeat(ratingCounter[1])}
-                ${(
-                  '<i class="far fa-star movie-star-rating" id="' +
-                  movieDetails._id +
-                  '" aria-hidden=" true"></i>'
-                ).repeat(ratingCounter[2])}
+            <p>${RatingStarHtmlElement(movieDetails.rating)}</p>
                        </div>
             <div class="movie-details-session">
                     ${movieDetails.sessions
@@ -185,11 +161,7 @@ const NavDetailview = id => {
           .split("-")
           .reverse()
           .join("-")
-      ].push(
-        sessionDateTime.split("T")[1].split(":")[0] +
-          ":" +
-          sessionDateTime.split("T")[1].split(":")[1]
-      );
+      ].push(timeAMPMConversion(sessionDateTime));
     });
 
     Object.keys(sessionObj).forEach(date => {
@@ -205,8 +177,37 @@ const NavDetailview = id => {
     return dateTimeHtmlElement;
   }
 
+  function timeAMPMConversion(DatetimeValue) {
+    let timeValue = DatetimeValue.split("T")[1].split(":")[0];
+    if (timeValue > 12) {
+      return `${timeValue - 12}:${
+        DatetimeValue.split("T")[1].split(":")[1]
+      } PM`;
+    } else {
+      return `${timeValue}:${DatetimeValue.split("T")[1].split(":")[1]} AM`;
+    }
+  }
+
   let backBtn = document.querySelector("#detailsBackBtn");
   backBtn.addEventListener("click", function() {
     displayListView(APIData);
   });
 };
+
+// Calling the movie result api
+
+const xhr = new XMLHttpRequest();
+xhr.responseType = "json";
+xhr.onreadystatechange = () => {
+  if (xhr.readyState === XMLHttpRequest.DONE) {
+    APIData = xhr.response.content;
+    // function call to process api result
+    displayListView(APIData);
+  }
+};
+// url to call api
+xhr.open(
+  "GET",
+  "https://salty-sea-40504.herokuapp.com/api/v1/movies/getSessions"
+);
+xhr.send();
