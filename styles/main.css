@@ -1,0 +1,288 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #0b1124;
+}
+.new-movies {
+  margin: 0.5em;
+  letter-spacing: 0.2em;
+  color: #efefe3;
+  font-family: segoe;
+}
+.movie {
+  padding: 1em;
+}
+.movie-title {
+  font-family: segoe;
+  font-weight: semi-bold;
+  letter-spacing: 0.1em;
+  color: #efefe3;
+}
+.movie-poster {
+  width: 100%;
+
+  box-shadow: 0 4px 8px 0 rgba(16, 108, 145, 0.2), 0 6px 20px 0 white;
+  z-index: -6;
+  border-radius: 20px;
+}
+.movie-info {
+  list-style-type: none;
+  display: flex;
+}
+.movie-more-info {
+  text-decoration: blink;
+  color: #efefe3;
+  font-size: 1.3em;
+}
+.movie-show-time {
+  flex-direction: row;
+  flex-grow: 2;
+}
+.movie-language {
+  font-size: 1.3em;
+  flex-grow: 1;
+  color: #efefe3;
+}
+
+/* Detail View CSS */
+
+.movie-details-tcontainer {
+  font-family: sans-serif;
+  padding: 0.25em;
+  position: relative;
+}
+
+.movie-details-trailer {
+  padding-bottom: 0.5em;
+  padding-top: 0.5em;
+}
+
+.movie-trailer {
+  height: 100%;
+  width: 100%;
+}
+
+/* 
+    ##Device = Laptops, Desktops
+    ##Screen = B/w 1025px to 1280px
+  */
+
+@media (min-width: 440px) and (max-width: 1380px) {
+  .movie-details-trailer {
+    display: inline-block;
+    height: 33vh;
+    width: 50vw;
+  }
+
+  .movie-details-booking {
+    top: 3em;
+  }
+}
+
+/* 
+    ##Device = Tablets, Ipads (portrait)
+    ##Screen = B/w 768px to 1024px
+  */
+
+@media (min-width: 359px) and (max-width: 640px) {
+  .movie-details-trailer {
+    display: inline-block;
+    height: 33vh;
+    width: 50vw;
+  }
+
+  .movie-details-booking {
+    top: 4em;
+  }
+}
+
+/* 
+    ##Device = Tablets, Ipads (landscape)
+    ##Screen = B/w 768px to 1024px
+  */
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  .movie-details-trailer {
+    display: inline-block;
+    height: 33vh;
+    width: 75vw;
+  }
+
+  .movie-details-booking {
+    top: 4em;
+  }
+}
+
+/* 
+    ##Device = Low Resolution Tablets, Mobiles (Landscape)
+    ##Screen = B/w 481px to 767px
+  */
+
+@media (min-width: 481px) and (max-width: 767px) {
+  .movie-details-trailer {
+    display: inline-block;
+    height: 33vh;
+    width: 100vw;
+  }
+
+  .movie-details-booking {
+    top: 15em;
+  }
+}
+
+/* 
+    ##Device = Most of the Smartphones Mobiles (Portrait)
+    ##Screen = B/w 320px to 479px
+  */
+
+@media (min-width: 320px) and (max-width: 480px) {
+  .movie-details-trailer {
+    display: inline-block;
+    height: 33vh;
+    width: 100vw;
+  }
+
+  .movie-details-booking {
+    top: 14em;
+  }
+}
+
+@media (min-width: 200px) and (max-width: 319px) {
+  .movie-details-trailer {
+    display: none;
+    height: 33vh;
+    width: 100vw;
+  }
+
+  .movie-details-booking {
+    top: 14em;
+  }
+}
+
+.movie-details-info {
+  display: inline-block;
+  color: #efefe3;
+  padding: 0.25em;
+  padding-top: 0.5em;
+  top: 0px;
+  vertical-align: top;
+}
+
+.movie-info-list {
+  list-style-type: none;
+  padding: 1em;
+}
+
+.movie-genre {
+  left: 0;
+  text-align: left;
+}
+
+.genre-detail {
+  font-weight: bold;
+}
+.movie-genre,
+.movie-duration,
+.movie-rating,
+.movie-session-clock,
+.movie-session-calendar {
+  padding-bottom: 0.5em;
+}
+
+.movie-duration-time {
+  color: #c32b54;
+  padding-left: 0.25em;
+}
+
+.movie-session-calendar,
+.movie-session-clock {
+  margin-right: 0.25em;
+}
+
+.movie-star-rating {
+  color: #ce742d;
+}
+
+.movie-session-calendar {
+  color: #b9bde4;
+}
+.movie-session-clock {
+  color: #96111c;
+}
+
+.movie-details-story-container {
+  padding-left: 1em;
+}
+
+.movie-details-story {
+  color: #efefe3;
+  font-family: sans-serif;
+  height: 48vh;
+  width: 100%;
+}
+
+.movie-details-title {
+  font-weight: 900;
+  line-height: 2em;
+  padding-top: 0.5em;
+}
+
+.movie-detailed-script {
+  font-size: 1em;
+  font-weight: 400;
+  line-height: 2em;
+  padding: 0.25em;
+}
+
+.movie-cast {
+  color: #c1e0f8;
+  margin-right: 0.25em;
+}
+.movie-cast-list,
+.movie-crew-list {
+  list-style-type: none;
+}
+
+.movie-crew {
+  font-weight: 600;
+}
+.movie-cast-name,
+.movie-crew-name {
+  display: inline-block;
+  padding-left: 0.25em;
+}
+
+.movie-crew {
+  font-weight: 900;
+  margin-top: 1em;
+}
+
+.movie-cast-list,
+.movie-crew-list {
+  margin-top: 0.25em;
+}
+
+.movie-details-booking {
+  position: relative;
+  text-align: center;
+}
+
+.movie-book-btn,
+.movie-back-btn {
+  background: #42a5f6;
+  border-radius: 0.5em;
+  border: none;
+  color: white;
+  font-family: "Hammersmith One", sans-serif;
+  font-size: 1em;
+  padding: 0.5em 1em;
+  text-align: center;
+}
+
+.movie-ticket,
+.previous-page {
+  padding: 0.25em;
+}
