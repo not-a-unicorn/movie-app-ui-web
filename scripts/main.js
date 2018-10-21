@@ -11,6 +11,7 @@ function RatingStarHtmlElement(ratingValue) {
   ratingCounter[0] = Math.floor(totalRatingCount % 5);
   ratingCounter[1] = Math.round(totalRatingCount % 1);
   ratingCounter[2] = 5 - ratingCounter[0] - ratingCounter[1];
+
   return `
   ${'<i class="fas fa-star movie-star-rating"  aria-hidden=" true"></i>'.repeat(
     ratingCounter[0]
@@ -33,22 +34,14 @@ renderHtml = responseData => {
       </div>
       <div class="column-right">
           <h2 class="movie-title">${responseData.title || "Untitled"}</h2>
-          <p class="movie-rating">Rating:${RatingStarHtmlElement(
-            responseData.rating
-          )}</p>
-          <p class="movie-language">Language: ${responseData.language ||
-            "Unknown"}</p>
-          <p class="movie-duration">Duration: ${responseData.duration ||
+          <div><p class="movie-rating">${responseData.language ||
+            "Unknown"} | ${RatingStarHtmlElement(responseData.rating)}</p>
+          <p class="movie-language"></p><div>
+          <p class="movie-duration"><i class="fas fa-hourglass-start"></i> ${responseData.duration ||
             "Unknown"} minutes</p>
       </div>
   </li>
   </ul>`;
-};
-
-const chkNull = (val, defaultVal) => {
-  if (val) {
-    return val;
-  } else return defaultVal;
 };
 
 const displayListView = apiData => {
@@ -139,42 +132,41 @@ const NavDetailview = id => {
         <button id='detailsBackBtn' class="movie-back-btn"><i class="fa fa-undo previous-page" id="previouspage" aria-hidden="true"></i>Back</button>
     </div>
   </div>`;
+  function convertDate(dateTime) {
+    return dateTime
+      .split("T")[0]
+      .split("-")
+      .reverse()
+      .join("-");
+  }
 
-  function createSessionhtml(sessionDateTimes) {
-    let sessionObj = {};
+  function sessionDateTimeTemplate(sessionObj) {
     let dateTimeHtmlElement = "";
-
-    sessionDateTimes.forEach(sessionDateTime => {
-      sessionObj[
-        sessionDateTime
-          .split("T")[0]
-          .split("-")
-          .reverse()
-          .join("-")
-      ] = [];
-    });
-
-    sessionDateTimes.forEach(sessionDateTime => {
-      sessionObj[
-        sessionDateTime
-          .split("T")[0]
-          .split("-")
-          .reverse()
-          .join("-")
-      ].push(timeAMPMConversion(sessionDateTime));
-    });
-
     Object.keys(sessionObj).forEach(date => {
       dateTimeHtmlElement +=
         '<i class="fa fa-calendar movie-session-calendar" id="${movieDetails._id}" aria-hidden="true"></i> ' +
         date +
         ' : <i class="far fa-clock movie-session-clock" id="${movieDetails._id}" aria-hidden="true"></i> ';
-      dateTimeHtmlElement += sessionObj[date].join(", ");
+      dateTimeHtmlElement += sessionObj[date];
 
       dateTimeHtmlElement += "<br>";
     });
 
     return dateTimeHtmlElement;
+  }
+
+  function createSessionhtml(sessionDateTimes) {
+    let sessionObj = {};
+
+    sessionDateTimes.forEach(sessionDateTime => {
+      const date = convertDate(sessionDateTime);
+      const time = timeAMPMConversion(sessionDateTime);
+
+      if (!sessionObj[date]) sessionObj[date] = "";
+      sessionObj[date] += time + ", " || "";
+    });
+
+    return sessionDateTimeTemplate(sessionObj);
   }
 
   function timeAMPMConversion(DatetimeValue) {
