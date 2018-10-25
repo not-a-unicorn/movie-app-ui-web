@@ -1,9 +1,32 @@
 let resultElement = document.querySelector("#movies");
 let APIData = [];
 
+// Calling the movie result api
+
+const xhr = new XMLHttpRequest();
+xhr.responseType = "json";
+xhr.onreadystatechange = () => {
+  if (xhr.readyState === XMLHttpRequest.DONE) {
+    APIData = xhr.response.content;
+    // function call to process api result
+    displayListView(APIData);
+  }
+};
+// url to call api
+xhr.open(
+  "GET",
+  "https://salty-sea-40504.herokuapp.com/api/v1/movies/getSessions"
+);
+xhr.send();
+
 const changeTitle = titleValue => {
   document.getElementById("page-title").innerHTML = titleValue;
 };
+
+let backBtn = document.querySelector("#backbtn");
+backBtn.addEventListener("click", function() {
+  displayListView(APIData);
+});
 
 function RatingStarHtmlElement(ratingValue) {
   let ratingCounter = [0, 0, 0];
@@ -46,7 +69,9 @@ renderHtml = responseData => {
 
 const displayListView = apiData => {
   changeTitle("Latest Movies");
+  backBtn.style.display = "none";
   resultElement.innerHTML = apiData.map(data => renderHtml(data)).join("\n");
+  console.log(resultElement);
   let thumbnails = document.querySelectorAll("#movielist > li");
   thumbnails.forEach(function(thumbnail) {
     thumbnail.addEventListener("click", function() {
@@ -62,76 +87,111 @@ const NavDetailview = id => {
   });
 
   changeTitle(movieDetails.title);
+  backBtn.style.display = "contents";
 
-  resultElement.innerHTML = `<div class="movie-details-tcontainer" id="moviedetailscontainer">
-    <div class="movie-details-trailer" id="moviedetailstrailer">
-        <iframe class="movie-trailer" id="${
-          movieDetails._id
-        }" src="https://www.youtube.com/embed/${
+  resultElement.innerHTML = `    <div class="movie-details" id="moviedetails">
+  <div class="movie-details-tcontainer" id="moviedetailscontainer">
+      <div class="movie-details-trailer" id="moviedetailstrailer">
+          <iframe class="movie-trailer" id="${
+            movieDetails._id
+          }" src="https://www.youtube.com/embed/${
     movieDetails.trailer.split("=")[1]
   }"
-  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-    </div>
-    <div class="movie-details-info" id="moviedetailsinfo">
-        <div class="movie-info-list" id="movieinfolist">
-            <div class="movie-genre" id="moviegenre"><span class="genre-detail" id="genredetail">Genre :</span>
-                ${movieDetails.genres}</div>
-            <div class="movie-duration" id="movieduration"><span class="genre-detail" id="genredetail">Duration
-                    :</span>${
-                      movieDetails.duration
-                    }<i class="fa fa-hourglass-half movie-duration-time" id="moviedurationtime"
-                    aria-hidden="true"></i></div>
-            <div class="movie-rating" id="movierating">
-            <p>${RatingStarHtmlElement(movieDetails.rating)}</p>
-                       </div>
-            <div class="movie-details-session">
-                    ${movieDetails.sessions
-                      .map(session => {
-                        return (
-                          session.cinema.state +
-                          " - " +
-                          session.cinema.location +
-                          "<br>" +
-                          createSessionhtml(session.sessionDateTime)
-                        );
-                      })
-                      .join("\n")}
-                      </div>
-        </div>
-    </div>
+frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+      </div>
+      <div class="movie-details-info" id="moviedetailsinfo">
+          <div class="movie-info-list" id="movieinfolist">
+              <div class="movie-genre" id="moviegenre"><span class="genre-detail" id="genredetail">Genre :</span>
+                  ${movieDetails.genres}</div>
+              <div class="movie-detail-duration" id="moviedetailduration"><span class="genre-detail" id="genredetail">Duration
+                      :</span> ${
+                        movieDetails.duration
+                      } <i class="fa fa-hourglass-half movie-duration-time" id="moviedurationtime"
+                      aria-hidden="true"></i></div>
+              <div class="movie-detail-rating" id="moviedetailrating">
+                   ${RatingStarHtmlElement(movieDetails.rating)}
+              </div>
+          </div>
+      </div>
+      <div class="tab" id="tab">
+          <button class="movie-name" id="moviename">${movieDetails.title ||
+            "Unknown"}</button>
+          <button class="movie-session-off" id="moviesession">Sessions</button>
+      </div>
+      <div class="movie-details-story-container" id="moviedetailsstorycontainer">
+          <div class="movie-details-story" id="moviedetailsstory">
+              <div class="movie-details-title">${movieDetails.title ||
+                "Unknown"}</div>
+              <div class="movie-detailed-script" id="moviedetailedscript">${
+                movieDetails.synopsis
+              }</div>
+              <div class="movie-details-title"><i class="fa fa-users movie-cast" id="moviecast" aria-hidden="true"></i>Starring</div>
+              <ul class="movie-cast-list" id="moviecastlist">
+              ${movieDetails.leadActors
+                .join(",")
+                .split(",")
+                .map(leadActor => {
+                  return '<li class="movie-cast-name" id="">' + leadActor;
+                })
+                .join(",</li>\n") + ".</li>"}
+               </ul>
+              <div class="movie-crew">Crew</div>
+              <ul class="movie-crew-list" id="moviecrewlist">
+                  <li class="movie-crew-name" id="moviecrewname"><span class="genre-detail" id="genredetail">Director
+                          :</span>
+                      ${movieDetails.crew.director}</li>
+                  <li class="movie-crew-name" id="moviecrewname"><span class="genre-detail" id="genredetail">Music-Director
+                          :</span>
+                      ${movieDetails.crew.musicDirector}</li>
+              </ul>
+
+          </div>
+          <div class="movie-details-session-off" id = "moviedetailssession">
+             ${movieDetails.sessions
+               .map(session => {
+                 return `${session.cinema.state} - ${
+                   session.cinema.location
+                 } <div class="movie-details-booking" id="moviedetailsbooking">
+                 <button class="movie-book-btn"><i class="fas fa-ticket-alt movie-ticket" id="movieticket"
+                         aria-hidden="true"></i>Book now</button>
+             </div><br>
+                   ${createSessionhtml(session.sessionDateTime)}<br>
+                    `;
+               })
+               .join("\n")}
+             
+          </div>
+      </div>
   </div>
-  <div class="movie-details-story-container" id="moviedetailsstorycontainer">
-    <div class="movie-details-story" id="moviedetailsstory">
-        <div class="movie-details-title"> ${movieDetails.title}</div>
-        <div class="movie-detailed-script" id="moviedetailedscript">
-            <p>${movieDetails.synopsis}</p>
-        </div>
-        <div class="movie-details-title"><i class="fa fa-users movie-cast" id="moviecast" aria-hidden="true"></i>Starring</div>
-        <ul class="movie-cast-list" id="moviecastlist">
-        ${movieDetails.leadActors
-          .join(",")
-          .split(",")
-          .map(leadActor => {
-            return '<li class="movie-cast-name" id="">' + leadActor;
-          })
-          .join(",</li>\n") + ".</li>"}
-        </ul>
-        <div class="movie-crew">Crew</div>
-        <ul class="movie-crew-list" id="moviecrewlist">
-            <li class="movie-crew-name" id="moviecrewname"><span class="genre-detail" id="genredetail">Director
-                    :</span>
-                ${movieDetails.crew.director},</li>
-            <li class="movie-crew-name" id="moviecrewname"><span class="genre-detail" id="genredetail">Music-Director
-                    :</span>
-                ${movieDetails.crew.musicDirector}</li>
-        </ul>
-    </div>
-    <div class="movie-details-booking" id="moviedetailsbooking">
-        <button class="movie-book-btn"><i class="fa fa-ticket movie-ticket" id="movieticket" aria-hidden="true"></i>Book
-            now</button>
-        <button id='detailsBackBtn' class="movie-back-btn"><i class="fa fa-undo previous-page" id="previouspage" aria-hidden="true"></i>Back</button>
-    </div>
-  </div>`;
+</div>`;
+
+  let sessionDivElement = document.querySelector("#moviedetailssession");
+  let MovieDetailsDivElement = document.querySelector("#moviedetailsstory");
+  let MovieSessionsBtn = document.querySelector("#moviesession");
+  MovieSessionsBtn.addEventListener("click", function() {
+    console.log(resultElement);
+    sessionDivElement.classList.add("movie-details-session");
+    MovieSessionsBtn.classList.add("movie-session");
+    MovieSessionsBtn.classList.remove("movie-session-off");
+    sessionDivElement.classList.remove("movie-details-session-off");
+    MovieNameBtn.classList.add("movie-name-off");
+    MovieDetailsDivElement.classList.add("movie-details-story-off");
+    MovieNameBtn.classList.remove("movie-name");
+    MovieDetailsDivElement.classList.remove("movie-details-story");
+  });
+  let MovieNameBtn = document.querySelector("#moviename");
+  MovieNameBtn.addEventListener("click", function() {
+    console.log(resultElement);
+    sessionDivElement.classList.remove("movie-details-session");
+    MovieSessionsBtn.classList.remove("movie-session");
+    MovieSessionsBtn.classList.add("movie-session-off");
+    sessionDivElement.classList.add("movie-details-session-off");
+    MovieNameBtn.classList.remove("movie-name-off");
+    MovieDetailsDivElement.classList.remove("movie-details-story-off");
+    MovieNameBtn.classList.add("movie-name");
+    MovieDetailsDivElement.classList.add("movie-details-story");
+  });
+
   function convertDate(dateTime) {
     return dateTime
       .split("T")[0]
@@ -143,13 +203,8 @@ const NavDetailview = id => {
   function sessionDateTimeTemplate(sessionObj) {
     let dateTimeHtmlElement = "";
     Object.keys(sessionObj).forEach(date => {
-      dateTimeHtmlElement +=
-        '<i class="fa fa-calendar movie-session-calendar" id="${movieDetails._id}" aria-hidden="true"></i> ' +
-        date +
-        ' : <i class="far fa-clock movie-session-clock" id="${movieDetails._id}" aria-hidden="true"></i> ';
-      dateTimeHtmlElement += sessionObj[date];
-
-      dateTimeHtmlElement += "<br>";
+      dateTimeHtmlElement += `<i class="fa fa-calendar movie-session-calendar" id="" aria-hidden="true"></i> ${date} : <i class="far fa-clock movie-session-clock" id="" aria-hidden="true"></i>
+       ${sessionObj[date]} <br>`;
     });
 
     return dateTimeHtmlElement;
@@ -157,13 +212,14 @@ const NavDetailview = id => {
 
   function createSessionhtml(sessionDateTimes) {
     let sessionObj = {};
-
+    console.log(sessionDateTimes);
     sessionDateTimes.forEach(sessionDateTime => {
       const date = convertDate(sessionDateTime);
       const time = timeAMPMConversion(sessionDateTime);
 
       if (!sessionObj[date]) sessionObj[date] = "";
-      sessionObj[date] += time + ", " || "";
+      if (!!sessionObj[date]) sessionObj[date] = sessionObj[date] + ", ";
+      sessionObj[date] += time || "";
     });
 
     return sessionDateTimeTemplate(sessionObj);
@@ -179,27 +235,4 @@ const NavDetailview = id => {
       return `${timeValue}:${DatetimeValue.split("T")[1].split(":")[1]} AM`;
     }
   }
-
-  let backBtn = document.querySelector("#detailsBackBtn");
-  backBtn.addEventListener("click", function() {
-    displayListView(APIData);
-  });
 };
-
-// Calling the movie result api
-
-const xhr = new XMLHttpRequest();
-xhr.responseType = "json";
-xhr.onreadystatechange = () => {
-  if (xhr.readyState === XMLHttpRequest.DONE) {
-    APIData = xhr.response.content;
-    // function call to process api result
-    displayListView(APIData);
-  }
-};
-// url to call api
-xhr.open(
-  "GET",
-  "https://salty-sea-40504.herokuapp.com/api/v1/movies/getSessions"
-);
-xhr.send();
