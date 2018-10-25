@@ -1,0 +1,562 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial,
+    sans-serif;
+  background-color: #37026e;
+}
+
+.page-title {
+  color: #d3a9ff;
+  display: inline-block;
+  padding-left: 7em;
+}
+
+@media (min-width: 200px) and (max-width: 319px) {
+  .page-title {
+    padding-left: 2em;
+  }
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+  .page-title {
+    padding-left: 2em;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 767px) {
+  .page-title {
+    padding-left: 2em;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .page-title {
+    padding-left: 2em;
+  }
+}
+
+@media (min-width: 359px) and (max-width: 640px) {
+  .page-title {
+    padding-left: 2em;
+  }
+}
+
+@media (min-width: 440px) and (max-width: 1380px) {
+  .page-title {
+    padding-left: 8em;
+  }
+}
+
+.movie-list {
+  padding: 0;
+  padding-top: 1em;
+  list-style-type: none;
+  width: 100%;
+}
+
+.movie {
+  background-color: #6b29ab;
+  background-image: linear-gradient(0deg, #d3a9ff -9%, #6b29ab);
+  border-radius: 5px;
+  display: flex;
+  margin-bottom: 1em;
+}
+
+.column-left {
+  flex: 3;
+  position: relative;
+}
+
+.column-right {
+  color: whitesmoke;
+  flex: 7;
+  padding: 1.5em;
+  text-shadow: 1em 0.25em 3em #8547c4;
+}
+
+.movie-poster {
+  box-shadow: 0.5em 1em 5em 0.5em #3c0376;
+  border-radius: 5px;
+}
+
+@media (min-width: 1025px) {
+  .movie {
+    height: 15em;
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+  }
+
+  .movie-poster {
+    height: 14em;
+    left: 1em;
+    position: relative;
+    top: -1em;
+  }
+
+  .column-right {
+    margin-left: -10em;
+  }
+
+  .movie-title {
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 0.35em;
+    margin-top: 0;
+  }
+
+  .movie-duration,
+  .movie-rating,
+  .movie-language {
+    font-size: 1.2em;
+    margin-bottom: 0.25em;
+    margin-top: 0;
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1024px) {
+  .movie {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    height: 13em;
+  }
+
+  .movie-poster {
+    height: 14em;
+    left: 1em;
+    position: relative;
+    top: -1em;
+  }
+
+  .column-right {
+    margin-left: -6em;
+  }
+
+  .movie-title {
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 0.35em;
+    margin-top: 0;
+  }
+
+  .movie-duration,
+  .movie-rating,
+  .movie-language {
+    font-size: 1.2em;
+    margin-bottom: 0.25em;
+    margin-top: 0;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 900px) {
+  .movie {
+    display: flex;
+    flex-direction: row;
+    height: 15em;
+  }
+
+  .movie-poster {
+    height: 15em;
+    left: 1em;
+    position: relative;
+    top: -0.5em;
+  }
+
+  .column-right {
+    margin-left: -3em;
+  }
+
+  .movie-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 0.33em;
+    margin-top: 0;
+  }
+
+  .movie-duration,
+  .movie-rating,
+  .movie-language {
+    font-size: 1em;
+    margin-bottom: 0.25em;
+    margin-top: 0;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 767px) {
+  .movie {
+    display: flex;
+    flex-direction: row;
+    height: 8em;
+  }
+
+  .movie-poster {
+    height: 8em;
+    left: 1em;
+    position: relative;
+    top: -0.5em;
+  }
+
+  .column-right {
+    margin-right: 5em;
+  }
+
+  .movie-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 0.33em;
+    margin-top: 0;
+  }
+
+  .movie-duration,
+  .movie-rating,
+  .movie-language {
+    font-size: 1em;
+    margin-bottom: 0.25em;
+    margin-top: 0;
+  }
+}
+
+@media (min-width: 321px) and (max-width: 480px) {
+  .movie {
+    display: flex;
+    flex-direction: row;
+    height: 7em;
+    width: 100%;
+  }
+
+  .movie-poster {
+    height: 6em;
+    left: 1em;
+    position: relative;
+    top: -0.7em;
+  }
+
+  .column-right {
+    margin-right: 4em;
+    margin-top: -1.5em;
+  }
+
+  .movie-title {
+    font-size: 1em;
+    font-weight: bold;
+    margin-bottom: 0.3em;
+    margin-top: 0;
+  }
+
+  .movie-duration,
+  .movie-rating,
+  .movie-language {
+    font-size: 1em;
+    margin-bottom: 0.2em;
+    margin-top: 0;
+  }
+}
+
+@media (min-width: 290px) and (max-width: 320px) {
+  .movie {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    height: 6.5em;
+  }
+
+  .movie-poster {
+    height: 6em;
+    left: 1em;
+    position: relative;
+    top: -0.5em;
+  }
+
+  .column-right {
+    margin-left: 0.5em;
+    margin-top: -0.5em;
+  }
+
+  .movie-title {
+    font-size: 1em;
+    font-weight: bold;
+    margin-bottom: 0.33em;
+    margin-top: 0;
+  }
+
+  .movie-duration,
+  .movie-rating,
+  .movie-language {
+    font-size: 0.5em;
+    margin-bottom: 0.25em;
+    margin-top: 0;
+  }
+}
+
+.back-btn {
+  display: inline-block;
+  font-size: 2em;
+  color: #a4a0a0;
+  display: none;
+}
+
+.movie-details-tcontainer {
+  font-family: sans-serif;
+  padding: 0.25em;
+  position: relative;
+}
+
+.movie-details-trailer {
+  padding-bottom: 0.5em;
+  padding-top: 0.5em;
+}
+
+.movie-trailer {
+  height: 100%;
+  width: 100%;
+}
+
+/* 
+  ##Device = Laptops, Desktops
+  ##Screen = B/w 1025px to 1280px
+*/
+
+@media (min-width: 440px) and (max-width: 1380px) {
+  .movie-details-trailer {
+    display: inline-block;
+    height: 33vh;
+    width: 50vw;
+  }
+}
+
+@media (min-width: 359px) and (max-width: 640px) {
+  .movie-details-trailer {
+    display: inline-block;
+    height: 33vh;
+    width: 50vw;
+  }
+}
+
+/* 
+  ##Device = Tablets, Ipads (landscape)
+  ##Screen = B/w 768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .movie-details-trailer {
+    display: inline-block;
+    height: 33vh;
+    width: 75vw;
+  }
+}
+
+/* 
+  ##Device = Low Resolution Tablets, Mobiles (Landscape)
+  ##Screen = B/w 481px to 767px
+*/
+
+@media (min-width: 481px) and (max-width: 767px) {
+  .movie-details-trailer {
+    display: inline-block;
+    height: 33vh;
+    width: 100vw;
+  }
+}
+
+/* 
+  ##Device = Most of the Smartphones Mobiles (Portrait)
+  ##Screen = B/w 320px to 479px
+*/
+
+@media (min-width: 320px) and (max-width: 480px) {
+  .movie-details-trailer {
+    display: inline-block;
+    height: 33vh;
+    width: 100vw;
+  }
+}
+
+@media (min-width: 200px) and (max-width: 319px) {
+  .movie-details-trailer {
+    display: none;
+    height: 33vh;
+    width: 100vw;
+  }
+}
+
+.movie-details-info {
+  display: inline-block;
+  color: #efefe3;
+  padding: 0.25em;
+  padding-top: 0.5em;
+  top: 0px;
+  vertical-align: top;
+}
+
+.movie-info-list {
+  list-style-type: none;
+  padding: 1em;
+}
+
+.movie-genre {
+  left: 0;
+  text-align: left;
+}
+
+.genre-detail {
+  font-weight: bold;
+}
+
+.movie-genre,
+.movie-detail-duration,
+.movie-detail-rating {
+  padding-bottom: 0.5em;
+}
+
+.movie-duration-time {
+  color: #e4a035;
+  font-size: 1em;
+  padding-left: 0.25em;
+}
+
+.movie-star-rating {
+  color: #e4a035;
+}
+
+.movie-session-calendar {
+  color: #bebfce;
+}
+.movie-session-clock {
+  color: #96111c;
+}
+
+.movie-details-story-container {
+  border: 1px solid black;
+  border-radius: 0.5em;
+  padding-left: 1em;
+  padding-top: 1em;
+  background-image: linear-gradient(-202deg, #3c0376 34%, silver);
+}
+
+.tab {
+  margin-top: 0.5em;
+  margin-right: 2em;
+}
+
+.movie-name,
+.movie-session {
+  border: none;
+  border-bottom: 3px solid whitesmoke;
+  background-color: inherit;
+  color: white;
+  display: inline;
+  font-weight: bold;
+  line-height: 2em;
+  padding: 0 1.5em;
+  margin: 0 0.25em;
+}
+
+.movie-name-off,
+.movie-session-off {
+  background-color: inherit;
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: inline;
+  line-height: 2em;
+  margin: 0 0.25em;
+  padding: 0 1em;
+}
+
+.movie-details-story {
+  color: #efefe3;
+  font-family: sans-serif;
+}
+
+.movie-details-story-off {
+  display: none;
+}
+
+.movie-details-title {
+  font-weight: 900;
+  line-height: 2em;
+  padding-top: 0.5em;
+}
+
+.movie-detailed-script {
+  font-size: 1em;
+  font-weight: 400;
+  line-height: 2em;
+  padding: 0.25em;
+}
+
+.movie-cast {
+  color: #c1e0f8;
+  margin-right: 0.25em;
+}
+
+.movie-cast-list,
+.movie-crew-list {
+  list-style-type: none;
+}
+
+.movie-crew {
+  font-weight: 600;
+}
+
+.movie-cast-name,
+.movie-crew-name {
+  display: inline-block;
+  padding-left: 0.25em;
+}
+
+.movie-crew {
+  font-weight: 900;
+  margin-top: 1em;
+}
+
+.movie-cast-list,
+.movie-crew-list {
+  margin-top: 0.25em;
+}
+
+.movie-details-session {
+  color: #efefe3;
+  /* display: flex; */
+  /* flex-direction: row; */
+}
+
+.movie-details-session-off {
+  display: none;
+}
+
+.movie-session-calendar,
+.movie-session-clock,
+.date,
+.time {
+  padding: 0.25em;
+}
+
+.date,
+.time {
+  color: white;
+}
+
+.movie-details-booking {
+  display: inline-block;
+  margin-left: 2em;
+}
+
+.movie-book-btn {
+  border-radius: 0.2em;
+  border: none;
+  color: white;
+  font-family: sans-serif;
+  font-size: 0.75em;
+  background-color: #7016d5;
+  padding: 0.2em;
+  text-align: center;
+}
+
+.movie-ticket {
+  padding: 0.25em;
+}
